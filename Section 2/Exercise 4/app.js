@@ -27,7 +27,7 @@ new Vue({
         vm.effectClasses.shrink = !vm.effectClasses.shrink;
       }, 1000);
     },
-    startProgress: function() {
+    startProgress() {
       var vm = this;
       var width = 0;
        

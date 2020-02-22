@@ -11,11 +11,25 @@
 
     <div id="app">
         <!-- Vue mixera les class natives et les class de vue js -->
-        <!-- Attachera la class "red" en fonction du boolean déclenché/toggle par le clik -->
+        <!-- Attachera la class "red" en fonction de la condition : boolean déclenché/toggle par le click -->
         <div class="demo" @click="attachRed = !attachRed" :class= "{red: attachRed, blue: !attachRed}"></div>
         <!-- Classes géré au niveau de computed, même comportement mais plus lisible -->
         <div class="demo" @click="attachRed = !attachRed" :class= "divClasses"></div>
-        <div class="demo"></div>
+        <hr>
+        <!-- Classes "dynamiques" avec "v-model", il suffit de définir la data d'origine -->
+        <input type="text" v-model="color">
+        <div class="demo" :class="color"></div>
+        <!-- Avec des tableaux -->
+        <div class="demo" :class="[color, {red: attachRed}]"></div>
+        <!-- Style properties (préférer camelCase) : -->
+        <div class="demo" :style="{'background-color': color}"></div>
+        <div class="demo" :style="{backgroundColor: color}"></div>
+        <!-- Custom Styles dans les computed (dynamique avec la couleur) -->
+        <div class="demo" :style="myStyle"></div>
+        <input type="text" v-model="width">
+        <!-- Mélanger les possibilités avec un array : -->
+        <div class="demo" :style="[myStyle, {height: width + 'px'}]"></div>
+        <!-- Plus dans l'exercice 4 -->
     </div>
 
 <script>
@@ -23,6 +37,8 @@
         el: "#app",
         data: {
             attachRed: false,
+            color: "",
+            width: 100,
         },
         computed: {
             divClasses() {
@@ -30,6 +46,12 @@
                     red: this.attachRed,
                     blue: !this.attachRed,
                 }
+            },
+            myStyle() {
+                return {
+                    backgroundColor: this.color,
+                    width: this.width + 'px',
+                };
             }
         }
     });

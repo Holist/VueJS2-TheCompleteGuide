@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>VueJS</title>
+        <link rel="stylesheet" href="">
+        <script src="vue.js"></script>
+    </head>
+<body>
+
+    <div id="app">
+        <!-- Vue mixera les class natives et les class de vue js -->
+        <!-- Attachera la class "red" en fonction du boolean déclenché/toggle par le clik -->
+        <div class="demo" @click="attachRed = !attachRed" :class= "{red: attachRed, blue: !attachRed}"></div>
+        <!-- Classes géré au niveau de computed, même comportement mais plus lisible -->
+        <div class="demo" @click="attachRed = !attachRed" :class= "divClasses"></div>
+        <div class="demo"></div>
+    </div>
+
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            attachRed: false,
+        },
+        computed: {
+            divClasses() {
+                return {
+                    red: this.attachRed,
+                    blue: !this.attachRed,
+                }
+            }
+        }
+    });
+    
+</script>
+
+<style>
+
+.demo {
+    width: 100px;
+    height: 100px;
+    background-color: gray;
+    display: inline-block;
+    margin: 10px;
+}
+
+.red {
+    background-color: red;
+}
+.blue {
+    background-color: blue;
+}
+.green {
+    background-color: green;
+}
+
+</style>
+
+</body>
+
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>VueJS</title>
+        <link rel="stylesheet" href="">
+        <script src="vue.js"></script>
+    </head>
+<body>
+    <div id="app">
+    <input type="text" v-on:input="changeTitle">
+    <!-- {{ Pour des valeurs HTML uniquement }} : -->
+    <p>{{ title }}</p>
+    <!-- Pour les attributs HTML on utilise les raccourcis Vue (directives) et le nom de la data directement : -->
+    <!-- Bind : Lier quelquechose à mes datas, v-bind ou : en raccourci -->
+    <p><a v-bind:href="link">Google</a></p>
+    <p><a :href="link">Google with Vue Bind Shortcut</a></p>
+    <p>{{ sayHello() }}</p>
+    <!-- La directive v-once ne mettra à jour le DOM qu'une seule fois pour cet élément (il ne changera pas quand "title" changera) -->
+    <p v-once>{{ sayTitle() }}</p>
+    <!-- vue JS ne rendra pas du HTML directement en utilisant les {{}} il faut utiliser la directive v-html, attention aux failles -->
+    <p v-html="finishedLink"></p>
+    
+    <hr>
+
+    <!-- Ecouter un événement : v-on:Event ou @Event en raccourci  -->
+    <button v-on:click="increaseCounter">Click me</button>
+    <p> {{ counter }} </p>
+    <!-- JS directement dans l'instance de vue : -->
+    <button v-on:click="counter++">Click me Directly JS without methods</button>
+    <p> {{ counter * 10}} </p>
+    <p @mousemove="updateCoordinates">Coordinates: {{ x }} / {{ y }}
+        <!-- EventModifier -->
+        <span @mousemove.stop="">DEAD SPOT</span>
+    </p>
+    <!-- Passer des arguments : on a encore accés à l'event avec $event au besoin -->
+    <button @click="increaseCounterwArgs(2, $event)">Click me (+2)</button>
+
+    <hr>
+
+    <!-- Keyboard Events (voir doc, possibilité de chainer) -->
+    <input type="text" @keyup.enter.space="alertMe">
+    <!-- On peut changer la valeur directement dans la valeur de la directive, c'est du js sans forcément passer par une fonction -->
+    <p>
+        <input type="text" @keydown.enter="value = $event.target.value ">
+        <p>{{ value }}</p>
+    </p>
+
+    <hr>
+
+    <!-- V-model : -->
+    <!-- So v-model is a two-way binding for form inputs. It combines v-bind, which brings a js value into the markup, and v-on:input to update the js value.
+        Use v-model when you can. Use v-bind/v-on when you must :-) I hope your answer was accepted.
+     -->
+    <input v-model="something">
+    <!-- shortcut for : -->
+    <input
+        value="something"
+        @input="something = $event.target.value"
+    >
+
+    <hr>
+    <!-- 
+
+    <button @click="increase">Increase</button>
+    <button @click="decrease">Decrease</button>
+    <p>Counter : {{ counter }}</p>
+    <p>Result : {{ result }}</p> 
+
+    -->
+
+    <!-- BETTER : -->
+    <!-- Mettre la logique dans l'event et le resultat dans une methode pour éviter la redondance de code -->
+    <!-- Properties Computed with output -->
+    <!-- 
+        When to use methods
+        To react on some event happening in the DOM
+        To call a function when something happens in your component. You can call a methods from computed properties or watchers.
+        
+        When to use computed properties
+        You need to compose new data from existing data sources
+        You have a variable you use in your template thats built from one or more data properties
+        You want to reduce a complicated, nested property name to a more readable and easy to use one, yet update it when the original property changes
+        You need to reference a value from the template. In this case, creating a computed property is the best thing because it’s cached.
+        You need to listen to changes of more than one data property
+        
+        When to use watchers
+        You want to listen when a data property changes, and perform some action
+        You want to listen to a prop value change
+        You only need to listen to one specific property (you cant watch multiple properties at the same time)
+        You want to watch a data property until it reaches some specific value and then do something
+
+        Methods are just static functions that run once called upon. You can pass in arguments, and they can return a value but are not required to.
+
+        Computed properties will update automatically once their dependencies change. They don't accept any arguments and must return a single value.
+
+        Watch functions allow you to monitor a single property and do stuff once it changes. They don't return any value.
+    -->
+
+    <button @click="counter++">Increase</button>
+    <button @click="counter--">Decrease</button>
+    <button @click="secondCounter--">Increase Second</button>
+    <p>Counter : {{ counter }} | {{ secondCounter }}</p>
+    <p>Result : {{ result() }} | {{ output }}</p>
+
+    <hr>
+
+    
+</div>
+
+    <script>
+        new Vue({
+            // el: Connect to DOM
+            // data : Store Data to be used
+            // methods : Methods for the vue Instance
+            // computed : Dependent Properties
+            // Execute code upon data changes
+            el: '#app',
+            data: {
+                title: 'Hello World!',
+                link: "http://google.com",
+                finishedLink: '<a href="http://google.com">Google with html in data</a>',
+                counter: 0,
+                secondCounter: 0,
+                x: 0,
+                y: 0,
+                value: "",
+                something: "",
+                // result: "",
+            },
+            methods: {
+                changeTitle(event) {
+                    this.title = event.target.value;
+                },
+                sayHello() {
+                    return "Hello";
+                },
+                sayTitle() {
+                    return this.title;
+                },
+                increaseCounter() {
+                    this.counter++;
+                },
+                increaseCounterwArgs(step, event) {
+                    console.log(event);
+                    this.counter+= step;
+                },
+                updateCoordinates(event) {
+                    this.x = event.clientX;
+                    this.y = event.clientY;
+                },
+                alertMe() {
+                    alert('Alert');
+                },
+                // increase() {
+                //     this.counter++;
+                // // Repetition : 
+                //     this.result = this.counter > 5 ? "Greater 5" : "Smaller 5"
+                // },
+                // decrease() {
+                //     this.counter--;
+                // // Repetition : 
+                //     this.result = this.counter > 5 ? "Greater 5" : "Smaller 5"
+                // },
+                result() {
+                    console.log("Method")
+                    return this.counter > 5 ? "Greater 5" : "Smaller 5"
+                }
+            },
+            computed: {
+                output() {
+                    console.log("Computed")
+                    return this.counter > 5 ? "Greater 5" : "Smaller 5"
+                }
+            },
+            watch: {
+                // Quand la propriété counter changera le code s'execute, il n'y a pas de return
+                // Voir exercice 3, peut etre lié à une computed mais sera executer QUE quand counter CHANGERA, pas quand il sera recalculé... si il n'est pas modifié
+                counter() {
+                    var vm = this;
+                    setTimeout(function() {
+                        vm.counter = 0;
+                    }, 2000);
+                }
+            },
+        });
+    </script>
+</body>
+
+</html>

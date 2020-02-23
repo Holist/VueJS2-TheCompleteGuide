@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>VueJS</title>
+        <link rel="stylesheet" href="">
+        <script src="vue.js"></script>
+    </head>
+<body>
+    <div id="app">
+        <!-- v-if=(condition qui renvoi un boolean) -->
+        <!-- v-if SUPPRIME/AJOUTE l'élement du DOM (et les enfants, ici la span) -->
+        <p v-if="show">You can see me! <span>Hello!</span></p>
+        <!-- v-else, il existe aussi v-else-if pour ajouter d'autres conditions (puis finir par v-else) -->
+        <p v-else>Now you see me!</p>
+        <!-- Template : Html5 qui n'apparaitra pas dans le DOM, à utiliser pour grouper les éléments (et appliquer la condition sur l'ensemble) Une div est utilisable mais pourrait avoir des effets de bords -->
+        <template v-if="show">
+            <h1>Heading in a template</h1>
+            <p>Inside a template</p>
+        </template>
+        <!-- v-show fait disparaitre l'element du DOM (ne le supprime pas) avec display none -->
+        <p v-show="show">Do you also see me? (v show)</p>
+        <button @click="show = !show">Switch</button>
+        <hr>
+        <!-- v For -->
+        <ul>
+            <!-- Le premier element est l'element, le second est l'index, l'ordre importe -->
+            <li v-for="(ingredient, index) in ingredients"> {{ ingredient }} ({{ index }})</li>
+        </ul>
+        <!-- V for Dans un template : -->
+        <template v-for="(ingredient, index) in ingredients">
+            <h1> {{ ingredient }}</h1>
+            <p>{{ index }}</p>
+        </template>
+        <hr>
+        <ul>
+            <li v-for="person in persons">
+                <!-- Value, Key sont des variables choisies mais l'ordre est important -->
+                <div v-for="(value, key, index) in person">{{ key }} : {{ value }} ({{ index }})</div>        
+            </li>
+        </ul>
+    </div>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            show: true,
+            ingredients: ['meat', 'fruit', 'cookies'],
+            persons: [
+                { name: 'Max', age: 27, color: 'red' },
+                { name: 'Anna', age: 'unknown', color: 'blue' }
+            ],
+        }
+    });
+</script>
+
+</body>
+
+</html>

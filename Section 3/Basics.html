@@ -25,14 +25,16 @@
         <hr>
         <!-- v For -->
         <ul>
-            <!-- Le premier element est l'element, le second est l'index, l'ordre importe -->
-            <li v-for="(ingredient, index) in ingredients"> {{ ingredient }} ({{ index }})</li>
+            <!-- Le premier element est l'element, le second est l'index, l'ordre importe, le nommage des variables non (sauf la data tableau (elements ici) bien sur) -->
+            <!-- utiliser la propriété :key pour assigner une clé unique (évite des comportements étranges dans les updates de listes, changement de place...) -->
+            <li v-for="(ingredient, index) in ingredients" :key="ingredient"> {{ ingredient }} ({{ index }})</li>
         </ul>
         <!-- V for Dans un template : -->
         <template v-for="(ingredient, index) in ingredients">
             <h1> {{ ingredient }}</h1>
             <p>{{ index }}</p>
         </template>
+        <button @click="ingredients.push('spices')"> Add New Ingredient</button>
         <hr>
         <ul>
             <li v-for="person in persons">
@@ -40,6 +42,22 @@
                 <div v-for="(value, key, index) in person">{{ key }} : {{ value }} ({{ index }})</div>        
             </li>
         </ul>
+        <!-- Loop n fois : -->
+        <span v-for="n in 10">{{ n }}</span>
+        <hr>
+        
+        <!-- Loop and check if its an array : (with templates) -->
+        <ul>
+            <li v-for="value in testData">
+                <template v-if="Array.isArray(value)">
+                <div v-for="element in value">{{ element }}</div>
+                </template>
+                <template v-else>
+                {{ value }}
+                </template>
+            </li>
+        </ul>
+
     </div>
 
 <script>
@@ -52,6 +70,11 @@
                 { name: 'Max', age: 27, color: 'red' },
                 { name: 'Anna', age: 'unknown', color: 'blue' }
             ],
+            testData: {
+                name: 'TESTOBJECT', 
+                id: 10,
+                data: [1.67, 1.33, 0.98, 2.21]
+            },
         }
     });
 </script>

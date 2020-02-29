@@ -11,18 +11,24 @@
     <!-- Différentes instances de Vue, laisser la logique dans une seule instance si il y a des connexions logiques nécessaires, sinon utiliser différentes instances -->
     <div id="app1">
     <h1 ref="heading">{{ title }}</h1>
+    <!-- la propriété ref (vue.js) est une clé utilisable par vue js -->
     <button @:click="show" ref="myButton">Show Paragraph</button>
     <p v-if="showParagraph">This is not always visible</p>
+    <hello></hello>
     </div>
-
+    <!-- Vue Js créé des watcher sur les proprété pour checker les changements et les rerendre si ils changent, via l'intermédiare d'un DOM virtuel qu'il a en mémoire : perf -->
     <div id="app2">
-    <h1>{{ title }}</h1>
-    <button @click="onChange">Change something in Vue 1</button>
+        <h1>{{ title }}</h1>
+        <button @click="onChange">Change something in Vue 1</button>
+        <button @click="title = 'changed for lifecycle tests'">Update Instance</button>
+        <!-- Destroy ne détruit pas le DOM mais la logique JS derriére -->
+        <button @click="destroy()">destroy Instance</button>
+        <hello></hello>
     </div>
 
     <div id="app3">
-    
     </div>
+
     <script src="app.js"></script>
 </body>
 </html>

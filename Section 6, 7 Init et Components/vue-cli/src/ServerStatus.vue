@@ -3,8 +3,8 @@
 <!-- UN SEUL ELEMENT ROOT, ici la div : -->
     <div>
         <p>Server Status : {{ status }}</p>
-        <hr>
         <button @click="changeStatus">Change Status</button>
+        <hr>
     </div>
 </template>
 

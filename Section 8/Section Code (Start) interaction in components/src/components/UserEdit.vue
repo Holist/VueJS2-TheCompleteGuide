@@ -13,6 +13,11 @@
 // Repasser par le parent en passant par les fonctions du parent
 // Utiliser l'event Bus pour passer d'un enfant à l'autre !!
 // Pour des applications plus complexe on utilisera Vue Ex pour gérer les datas des composants
+
+// You got props  to pass data from a PARENT => CHILD.
+// You got events ($emit ) to pass data from CHILD => PARENT.
+// And if you got two sibling components which you need to communicate with each other: You can use an event bus to pass data from SIBLING => SIBLING.
+
 import { eventBus } from '../main';
 export default {
     props: ['userAge'],

@@ -73,8 +73,13 @@ export const store = new Vuex.Store({
             commit('updateValue', payload)
         },
     },
-    // Import des modules pour un store clean :
+    // !!!!!! Import des modules/fichiers pour un store clean !!!!!!!!!
+    // On stocke les actions/mutations...commune à l'appli dans des fichiers dédiés ex : actions.js
+    // On importe en début de fichier :
+    // import * as actions from './actions';
+    // puis il suffit de mettre actions,
     // modules: {
     //     counter
-    // }
+    // },
+    // actions,
 });

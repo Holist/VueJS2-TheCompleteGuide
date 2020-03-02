@@ -13,10 +13,42 @@
             tag="button" 
             :to="{ name: 'userEdit', params: { id: $route.params.id } }"
             class="btn btn-primary">Edit User (name and params)</router-link>
-        <!-- Query parameters -->
+        <!-- Query parameters (in a 'link' data for reading purposes) -->
         <router-link 
             tag="button" 
-            :to="{ name: 'userEdit', params: { id: $route.params.id }, query: { locale: 'en', q: 100 } }"
+            :to="link"
             class="btn btn-primary">Query params</router-link>
     </div>
 </template>
+
+<script>
+export default {
+    data() {
+        return {
+            link: {
+                name: 'userEdit',
+                params: {
+                    id: this.$route.params.id
+                },
+                query: {
+                    locale: 'en',
+                    q: 100 
+                },
+                // Pass a hash value for go to id in nav
+                hash: '#data'
+            }
+        }
+    },
+    // Security checks in component :
+    beforeRouteEnter (to, from, next) {
+        // Peut ou pas ?, pas de next(), pas d'autorisation et le composant ne sera pas créer
+        // if (user.authorize) {
+        //     next();
+        // } else {
+        //     next(false);
+        // };
+
+        next();
+    }
+}
+</script>

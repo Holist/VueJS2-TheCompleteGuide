@@ -1,9 +1,18 @@
-import User from './components/user/User.vue';
 import Home from './components/Home.vue';
 import Header from './components/Header.vue';
+
+// import User from './components/user/User.vue';
 import UserStart from './components/user/UserStart.vue';
 import UserDetail from './components/user/UserDetail.vue';
 import UserEdit from './components/user/UserEdit.vue';
+
+// Lazy Loading with Webpack : Il ne les enverra au client, via un build.js additionnel que si c'est nécessaire
+const User = resolve => {
+    require.ensure(['./components/user/User.vue'], () => {
+        resolve(require('./components/user/User.vue'));
+    }, 'user');
+    // 'user' est ici un nom de groupe, pour par exemple envoyer un build.js pour plusieurs composants d'un coup
+};
 
 export const routes = [
     // Use Props for routing :
@@ -31,7 +40,11 @@ export const routes = [
         'header-bottom': Header,
     }, children: [
         { path: '', component: UserStart },
-        { path: ':id', component: UserDetail },
+        // beforeEnter for security checks (local in routes) :
+        { path: ':id', component: UserDetail, beforeEnter: (to, from, next) => {
+            console.log('inside route setup');
+            next();
+        } },
         { path: ':id/edit', component: UserEdit, name: "userEdit" },
     ]},
     // { path: '/user/:id', component: User, props: true},

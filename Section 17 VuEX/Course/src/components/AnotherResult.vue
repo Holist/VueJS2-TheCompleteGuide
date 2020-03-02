@@ -1,8 +1,8 @@
 <template>
 <div>
-    <p>Counter is: {{ counter }}</p>
-    <p>Number of Clicks : {{ clicks }}</p>
-    <p>Number of Clicks with my computed (and mapGetters) : {{ myown }}</p>
+    <p>Counter is (with mapGetters): {{ counter }}</p>
+    <p>Number of Clicks (with mapGetters) : {{ clicks }}</p>
+    <p>Number of Clicks with my own computed (and mapGetters used before) : {{ myown }}</p>
 </div>
 </template>
 
@@ -25,7 +25,6 @@
             }),
             myown() {
                 return this.$store.getters.doubleCounter;
-
             }
         }
 

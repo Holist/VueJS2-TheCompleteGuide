@@ -1,9 +1,10 @@
 <template>
-    <p>Counter is: {{ counter }}</p>
+    <p>Counter is (without mapGetters): {{ counter }}</p>
 </template>
 
 <script>
     export default {
+        // Voir AnotherResult pour l'utilisation et le mappage des getters
         // props: ['counter']
         // Bye bye les props et les emit..
         // On accéde au magasin de donnée comme ca :

@@ -11,6 +11,7 @@
                     <li v-for="fruit in filteredFruits">{{ fruit }}</li>
                 </ul>
                 <hr>
+                <!-- Les datas du mixin ne sont pas partagées -->
                 <app-list></app-list>
             </div>
         </div>
